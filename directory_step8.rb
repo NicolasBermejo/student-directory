@@ -1,4 +1,39 @@
-# Here is the method to get user input
+def input_cohort
+  default_cohort = :January
+  puts "please enter your cohort month"
+  cohort = gets.chomp.downcase
+  case cohort
+  when "january"
+    cohort = :January
+  when "february"
+    cohort = :February
+  when "march"
+    cohort = :March
+  when "april"
+    cohort = :April
+  when "may"
+    cohort = :May
+  when "june"
+    cohort = :June
+  when "july"
+    cohort = :July
+  when "august"
+    cohort = :August
+  when "september"
+    cohort = :September
+  when "october"
+    cohort = :October
+  when "november"
+    cohort = :November
+  when "december"
+    cohort = :December
+  when ""
+    cohort = default_cohort
+  else
+    cohort = default_cohort
+  end
+end
+
 def input_students
   puts "Please enter the name of the students"
   puts "To finish, just hit return twice"
@@ -13,13 +48,11 @@ def input_students
   puts "where you from"
   country = gets.chomp
   country = "undefined" if country.empty?
-  puts "what is your height"
+  puts "what is your height(cm)"
   height = gets.chomp
   height = "undefined" if height.empty?
-  # while the name is not empty, repeat this code
-  puts "what is your cohort"
-  cohort = gets.chomp
-  cohort = "november" if cohort.empty?
+  # while the name is not empty, repeat this cod  e
+  cohort = input_cohort
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobby: hobby, country: country, height: height}
@@ -33,35 +66,36 @@ def input_students
     puts "where you from"
     country = gets.chomp
     country = "undefined" if country.empty?
-    puts "what is your height"
+    puts "what is your height(cm)"
     height = gets.chomp
     height = "undefined" if height.empty?
-    puts "what is your cohort"
-    cohort = gets.chomp
-    cohort = "november" if cohort.empty?
+    cohort = input_cohort
   end
   students
 end
-# Here we define the methods to print the name
+
 def print_header
-  puts "The students of Villains Academy".center(148)
-  puts "-------------".center(148)
+  puts "The students of Villains Academy".center(50)
+  puts "-------------".center(50)
 end
+
 def print(students)
   student_counter = 1
   index = 0
   while index <= students.length - 1
     new_array = students[index]
-      puts "#{student_counter} #{new_array[:name]} (#{new_array[:cohort]} cohort) (hobby: #{new_array[:hobby]}) (country: #{new_array[:country]}) (height(feet): #{new_array[:height]})".center(148)
+      puts "#{student_counter} #{new_array[:name]} (#{new_array[:cohort]} cohort) (hobby: #{new_array[:hobby]}) (country: #{new_array[:country]}) (height(cm): #{new_array[:height]})".center(50)
     student_counter += 1
     index += 1
   end
 end
+
 def print_footer(students)
-  puts "-------------".center(148)
-  puts "Overall, we have #{students.length} great students".center(148)
+  puts "-------------".center(50)
+  puts "Overall, we have #{students.length} great students".center(50)
 end
-# Here we call the methods
+
+
 students = input_students
 if students.length < 1
   return nil
