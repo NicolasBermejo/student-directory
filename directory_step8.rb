@@ -2,32 +2,31 @@ def input_cohort
   default_cohort = :January
   puts "please enter your cohort month"
   cohort = gets.strip.downcase
-  case cohort
-  when "january"
+  if cohort == "january"
     cohort = :January
-  when "february"
+  elsif cohort == "february"
     cohort = :February
-  when "march"
+  elsif cohort == "march"
     cohort = :March
-  when "april"
+  elsif cohort == "april"
     cohort = :April
-  when "may"
+  elsif cohort == "may"
     cohort = :May
-  when "june"
+  elsif cohort == "june"
     cohort = :June
-  when "july"
+  elsif cohort == "july"
     cohort = :July
-  when "august"
+  elsif cohort == "august"
     cohort = :August
-  when "september"
+  elsif cohort == "september"
     cohort = :September
-  when "october"
+  elsif cohort == "october"
     cohort = :October
-  when "november"
+  elsif cohort == "november"
     cohort = :November
-  when "december"
+  elsif cohort == "december"
     cohort = :December
-  when ""
+  elsif cohort == ""
     puts "unrecognized, cohort set to default (#{default_cohort})"
     cohort = default_cohort
   else
