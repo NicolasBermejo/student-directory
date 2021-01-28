@@ -90,11 +90,27 @@ def print(students)
   end
 end
 
+def print_by_cohort(students)
+  if students.empty?
+    puts "No students".center(50)
+  else
+    cohort_sort = students.map do |student|
+      student[:cohort]
+    end
+    cohort_sort.uniq.each do |cohort|
+      puts "#{cohort} cohort".upcase.center(50)
+        students.each do |student|
+          puts "-------------".center(50)
+          puts "#{student[:name]} (hobby: #{student[:hobby]}) (country: #{student[:country]}) (height(cm): #{student[:height]})" if student[:cohort] == cohort
+        end
+    end
+  end
+end
+
 def print_footer(students)
   puts "-------------".center(50)
   puts "Overall, we have #{students.length} great students".center(50)
 end
-
 
 students = input_students
 if students.length < 1
@@ -102,5 +118,6 @@ if students.length < 1
 else
   print_header
   print(students)
+  print_by_cohort(students)
   print_footer(students)
 end
