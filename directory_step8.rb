@@ -59,14 +59,14 @@ def print(students)
 end
 def print_footer(students)
   puts "-------------".center(148)
-  if students.length < 2
-    puts "Overall, we have #{students.length} great student".center(148)
-  else
-    puts "Overall, we have #{students.length} great students".center(148)
-  end
+  puts "Overall, we have #{students.length} great students".center(148)
 end
 # Here we call the methods
 students = input_students
-print_header
-print(students)
-print_footer(students)
+if students.length < 1
+  return nil
+else
+  print_header
+  print(students)
+  print_footer(students)
+end
