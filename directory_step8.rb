@@ -1,7 +1,7 @@
 def input_cohort
   default_cohort = :January
   puts "please enter your cohort month"
-  cohort = gets.chomp.downcase
+  cohort = gets.strip.downcase
   case cohort
   when "january"
     cohort = :January
@@ -28,8 +28,10 @@ def input_cohort
   when "december"
     cohort = :December
   when ""
+    puts "unrecognized, cohort set to default (#{default_cohort})"
     cohort = default_cohort
   else
+    puts "unrecognized, cohort set to default (#{default_cohort})"
     cohort = default_cohort
   end
 end
@@ -40,16 +42,16 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.strip
   puts "what is your hobby"
-  hobby = gets.chomp
+  hobby = gets.strip
   hobby = "undefined" if hobby.empty?
   #get another name from the user
   puts "where you from"
-  country = gets.chomp
+  country = gets.strip
   country = "undefined" if country.empty?
   puts "what is your height(cm)"
-  height = gets.chomp
+  height = gets.strip
   height = "undefined" if height.empty?
   # while the name is not empty, repeat this cod  e
   cohort = input_cohort
@@ -57,17 +59,17 @@ def input_students
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobby: hobby, country: country, height: height}
     puts "Now we have #{students.count} students"
-    name = gets.chomp
+    name = gets.strip
     break if name.empty?
     puts "what is your hobby"
-    hobby = gets.chomp
+    hobby = gets.strip
     hobby = "undefined" if hobby.empty?
     #get another name from the user
     puts "where you from"
-    country = gets.chomp
+    country = gets.strip
     country = "undefined" if country.empty?
     puts "what is your height(cm)"
-    height = gets.chomp
+    height = gets.strip
     height = "undefined" if height.empty?
     cohort = input_cohort
   end
@@ -99,7 +101,7 @@ def print_by_cohort(students)
     end
     puts "-------------".center(50)
     cohort_sort.uniq.each do |cohort|
-      puts "----#{cohort} cohort----".upcase.center(50)
+      puts "---- #{cohort} Cohort ----".center(50)
         students.each do |student|
           puts "#{student[:name]} (hobby: #{student[:hobby]}) (country: #{student[:country]}) (height(cm): #{student[:height]})" if student[:cohort] == cohort
         end
@@ -116,15 +118,8 @@ students = input_students
 if students.length < 1
   return nil
 else
-  puts "do you want the 'full list' or list by 'cohort'?"
-  choice = gets.chomp
-  if choice == "full list"
     print_header
     print_list(students)
-    print_footer(students)
-  elsif choice == "cohort"
-    print_header
     print_by_cohort(students)
     print_footer(students)
-  end
 end
