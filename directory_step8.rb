@@ -79,7 +79,7 @@ def print_header
   puts "-------------".center(50)
 end
 
-def print(students)
+def print_list(students)
   student_counter = 1
   index = 0
   while index <= students.length - 1
@@ -97,10 +97,10 @@ def print_by_cohort(students)
     cohort_sort = students.map do |student|
       student[:cohort]
     end
+    puts "-------------".center(50)
     cohort_sort.uniq.each do |cohort|
-      puts "#{cohort} cohort".upcase.center(50)
+      puts "----#{cohort} cohort----".upcase.center(50)
         students.each do |student|
-          puts "-------------".center(50)
           puts "#{student[:name]} (hobby: #{student[:hobby]}) (country: #{student[:country]}) (height(cm): #{student[:height]})" if student[:cohort] == cohort
         end
     end
@@ -116,8 +116,15 @@ students = input_students
 if students.length < 1
   return nil
 else
-  print_header
-  print(students)
-  print_by_cohort(students)
-  print_footer(students)
+  puts "do you want the 'full list' or list by 'cohort'?"
+  choice = gets.chomp
+  if choice == "full list"
+    print_header
+    print_list(students)
+    print_footer(students)
+  elsif choice == "cohort"
+    print_header
+    print_by_cohort(students)
+    print_footer(students)
+  end
 end
