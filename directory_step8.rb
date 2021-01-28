@@ -102,9 +102,9 @@ def print_by_cohort(students)
     puts "-------------".center(50)
     cohort_sort.uniq.each do |cohort|
       puts "---- #{cohort} Cohort ----".center(50)
-        students.each do |student|
-          puts "#{student[:name]} (hobby: #{student[:hobby]}) (country: #{student[:country]}) (height(cm): #{student[:height]})" if student[:cohort] == cohort
-        end
+      students.each do |student|
+        puts "#{student[:name]} (hobby: #{student[:hobby]}) (country: #{student[:country]}) (height(cm): #{student[:height]})" if student[:cohort] == cohort
+      end
     end
   end
 end
