@@ -4,14 +4,14 @@ def input_students
   puts "Please enter the name of the students"
   puts "To finish, just hit return twice"
   # get the first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
     #get another name from the user
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
   # return the array of students
   @students
@@ -44,17 +44,23 @@ def show_students
   print_footer
 end
 
-def process(selection)
+def process
+  selection = STDIN.gets.chomp
   case selection
     when "1"
+      puts "You have chosen to input new students"
       input_students
     when "2"
+      puts "You have chosen to show the student list"
       show_students
     when "3"
+      puts "You have chosen to save the current list of students"
       save_students
     when "4"
+      puts "You have chosen to load previous student list"
       load_students
     when "9"
+      puts "You have chosen to exit"
       exit
     else
       puts "I don't know what you mean, try again"
@@ -62,31 +68,48 @@ def process(selection)
 end
 
 def save_students
+  puts "which file do you want?"
+  file_to_save = STDIN.gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(file_to_save, "w") do |file|
   # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
 end
 
 def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  puts "which file would you like to load?"
+  file_to_load = STDIN.gets.chomp
+  file = File.open(file_to_load, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      @students << {name: name, cohort: cohort.to_sym}
+    end
   end
-  file.close
+end
+
+def try_load_students(filename = "students.csv")
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process
   end
 end
 # Here we call the methods
+try_load_students
 interactive_menu
