@@ -1,20 +1,27 @@
 @students = []
+
 # Here is the method to get user input
 def input_students
   puts "Please enter the name of the students"
   puts "To finish, just hit return twice"
   # get the first name
   name = STDIN.gets.chomp
+  cohort = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    adding_students(name, cohort)
     puts "Now we have #{@students.count} students"
     #get another name from the user
     name = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp
   end
   # return the array of students
   @students
+end
+
+def adding_students(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 # Here we define the methods to print the name
 def print_header
@@ -54,11 +61,11 @@ def process
       puts "You have chosen to show the student list"
       show_students
     when "3"
-      puts "You have chosen to save the current list of students"
       save_students
+      puts "You have saved the list of students"
     when "4"
-      puts "You have chosen to load previous student list"
       load_students
+      puts "You have loaded the list of students"
     when "9"
       puts "You have chosen to exit"
       exit
@@ -87,7 +94,7 @@ def load_students
   file = File.open(file_to_load, "r") do |file|
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
-      @students << {name: name, cohort: cohort.to_sym}
+      adding_students(name, cohort)
     end
   end
 end
