@@ -1,5 +1,6 @@
+require 'csv'
 def own_source_code
-  file = File.open(__FILE__, "r") do |file|
+  CSV.foreach(__FILE__) do |file|
     file.each do |x|
       puts x
     end
