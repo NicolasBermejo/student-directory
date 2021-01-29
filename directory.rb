@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 
 # Here is the method to get user input
@@ -78,12 +79,11 @@ def save_students
   puts "which file do you want?"
   file_to_save = STDIN.gets.chomp
   # open the file for writing
-  file = File.open(file_to_save, "w") do |file|
+  CSV.open(file_to_save, "wb") do |csv|
   # iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << student_data
     end
   end
 end
@@ -91,11 +91,9 @@ end
 def load_students
   puts "which file would you like to load?"
   file_to_load = STDIN.gets.chomp
-  file = File.open(file_to_load, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
+  CSV.foreach(file_to_load) do |row|
+      name, cohort = row
       adding_students(name, cohort)
-    end
   end
 end
 
